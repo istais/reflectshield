@@ -1,0 +1,23 @@
+{
+    "name": "istais/ReflectShield",
+    "version": "0.1.0",
+    "description": "ReflectShield is a simple to use, shield against reflected XSS attacks",
+    "license": "MIT",
+    "keywords": ["xss","filter","reflected","ids","ips","htmlentities"],
+    "homepage": "https://github.com/istais/ReflectShield",
+    "authors": [
+        {
+            "name": "Ioannis Stais",
+            "email": "ioannis.stais@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ReflectShield\\": "src"
+        }
+    }
+}
