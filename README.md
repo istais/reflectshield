@@ -17,14 +17,14 @@ ___
 * Paste the following into your .htaccess file and it will enable ReflectShield across all pages in the directory where the .htaccess file resides:
 
 	```
-	php_value auto_prepend_file /var/www/html/ReflectShield/examples/usinghtaccess/initReflectShield.php
+	php_value auto_prepend_file /var/www/html/reflectshield/examples/usinghtaccess/initReflectShield.php
 	```
 
 	The content of initReflectShield.php file should be:
 
 	```php
 	use ReflectShield\ReflectShield;
-	require_once  '/var/www/html/ReflectShield/vendor/autoload.php'; 
+	require_once  '/var/www/html/reflectshield/vendor/autoload.php'; 
 	$shield = new ReflectShield;
 	```
 
