@@ -1,10 +1,10 @@
 {
-    "name": "istais/ReflectShield",
+    "name": "istais/reflectshield",
     "version": "0.1.0",
     "description": "ReflectShield is a simple to use, shield against reflected XSS attacks",
     "license": "MIT",
     "keywords": ["xss","filter","reflected","ids","ips","htmlentities"],
-    "homepage": "https://github.com/istais/ReflectShield",
+    "homepage": "https://github.com/istais/reflectshield",
     "authors": [
         {
             "name": "Ioannis Stais",
