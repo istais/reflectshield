@@ -4,7 +4,7 @@ ReflectShield migrates a part of Chrome XSS Protection on the server side. Refle
 
 ##The Chrome XSS Protection:
 
-	XSS Auditor is a built-in function of Chrome and Safari designed to mitigate Cross-site Scripting (XSS) attacks. It aims to identify if query parameters contain malicious JavaScript and block the response if it believes the payloads were injected into the server response. XSS Auditor takes a black list approach to identify dangerous characters and tags supplied in request parameters. It also attempts to match query parameters with content to identify injection points.
+XSS Auditor is a built-in function of Chrome and Safari designed to mitigate Cross-site Scripting (XSS) attacks. It aims to identify if query parameters contain malicious JavaScript and block the response if it believes the payloads were injected into the server response. XSS Auditor takes a black list approach to identify dangerous characters and tags supplied in request parameters. It also attempts to match query parameters with content to identify injection points.
 
 ##The ReflectShield protects from:
 
