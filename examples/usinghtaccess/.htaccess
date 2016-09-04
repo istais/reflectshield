@@ -1,1 +1,1 @@
-php_value auto_prepend_file /var/www/html/ReflectShield/examples/usinghtaccess/initReflectShield.php
+php_value auto_prepend_file /var/www/html/reflectshield/examples/usinghtaccess/initReflectShield.php
