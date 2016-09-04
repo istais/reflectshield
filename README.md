@@ -1,6 +1,6 @@
 #ReflectShield
 
-ReflectShield migrates a part of Chrome XSS Protection on the server side. ReflectShield checks whether a script that’s about to run on a web page is also present in the request that fetched that web page. If the script is present in the request, that’s a strong indication that the web server might have been tricked into reflecting the script. Therefore, it blocks the reflected XSS attacks by translating all characters of this request which have HTML character entity equivalents into these entities.
+ReflectShield migrates a part of Chrome XSS Protection on the server side. ReflectShield checks whether a script that’s about to run on a web page is also present in the request that fetched that web page. If the script is present in the request, that’s a strong indication that the web server might have been tricked into reflecting the script. Therefore, it blocks the reflected XSS attacks by translating all characters of this request parameter which have HTML character entity equivalents into these entities.
 
 ##The Chrome XSS Protection:
 
