@@ -26,7 +26,6 @@ namespace ReflectShield;
 class ReflectShield
 {
 	public function sanitize($array, $buffer){
-
 		if (!isset($array)){
 			return $buffer;
 		}
@@ -36,24 +35,27 @@ class ReflectShield
 		   		$buffer = $this->sanitize($value, $buffer);
 		   }
 		   else{
-		   	   $buffer = (str_replace($key, htmlentities($key,ENT_QUOTES), $buffer));
 			   $buffer = (str_replace($value, htmlentities($value,ENT_QUOTES), $buffer));
 		   }
 		}
 		return $buffer;
 	}
 
+	public function flatten(array $array) {
+    	$return = array();
+    	array_walk_recursive($array, function($a,$b) use (&$return) { $return[] = $a;$return[] = $b;});
+    	return $return;
+	}
+
+	
 	public function core($buffer)
-	{
-		$buffer = $this->sanitize($_GET, $buffer);
-		$buffer = $this->sanitize($_POST, $buffer);
-		$buffer = $this->sanitize($_COOKIE, $buffer);
-		$buffer = $this->sanitize($_FILES, $buffer);
-	  	return $buffer;
+	{   
+		$data = array_merge($this->flatten($_GET),$this->flatten($_POST),$this->flatten($_COOKIE),$this->flatten($_FILES));
+		usort($data,function($a, $b) { return strlen($b) - strlen($a);});
+		return $this->sanitize($data, $buffer);
 	}
 
 	public function __construct(){
-
 		ob_start(array($this,'core'));
 
 	}
