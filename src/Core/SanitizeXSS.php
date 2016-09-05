@@ -21,13 +21,49 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-namespace ReflectShield;
+namespace ReflectShield\Core;
 
-class ReflectShield
+class SanitizeXSS
 {
-	public function __construct(){
-		$core = new \ReflectShield\Core\SanitizeXSS;
+	public function sanitize($array, $buffer){
+		if (!isset($array)){
+			return $buffer;
+		}
+		foreach($array as $key => $value)
+		{
+		   if (is_array($value)){
+		   		$buffer = $this->sanitize($value, $buffer);
+		   }
+		   else{
+			   $buffer = (str_replace($value, htmlentities($value,ENT_QUOTES), $buffer));
+		   }
+		}
+		return $buffer;
 	}
 
+	public function flatten(array $array) {
+    	$return = array();
+    	array_walk_recursive($array, function($a,$b) use (&$return) { $return[] = $a;$return[] = $b;});
+    	return $return;
+	}
+
+	
+	public function core($buffer)
+	{   
+		$data = array_merge($this->flatten($_GET),$this->flatten($_POST),$this->flatten($_COOKIE),$this->flatten($_FILES));
+		usort($data,function($a, $b) { return strlen($b) - strlen($a);});
+		return $this->sanitize($data, $buffer);
+	}
+
+	public function __construct(){
+		ob_start(array($this,'core'));
+
+	}
+
+	public function __destruct(){
+
+		ob_end_flush();
+
+	}
 }
 ?>
