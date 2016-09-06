@@ -18,15 +18,20 @@ ___
 
 ##Installation:
 
-* Paste the following into your .htaccess file and it will enable ReflectShield across all pages in the directory where the .htaccess file resides:
+* ReflectShield uses PHP Patchwork in order to perform dynamic method redefinition. As a result, in order the patching to be successful, the recommended way is to import ReflectShield first in separated initialization file, as the redefinition will not work on any script compiled earlier than itself, and any used MySQL function at this step will remain unprotected. It is recommended to create an index file as the following, and include your " application.php", which has to verify that the variable "protect" is set.
 
+	```php
+	use ReflectShield\ReflectShield;
+	$shield = new ReflectShield;
+	
+	define("protect",true);
+	include __DIR__ . application.php
 	```
-	php_value auto_prepend_file /var/www/html/reflectshield/examples/usinghtaccess/initReflectShield.php
-	```
 
-	If .htaccess files are not enabled, check the following site https://help.ubuntu.com/community/EnablingUseOfApacheHtaccessFiles
 
-* If none of the above options is available, you can use directly ReflectShield in your PHP scripts, by requesting a new object at the beggining of the script:
+##Direct integration by circumventing the preprocessor:
+	
+* you can use directly ReflectShield in your PHP scripts, by requesting a new object at the beggining of the script. Including the file agail, allows the preprocessor to implement the method redefinition correctly:
 
 	```php
 	use ReflectShield\ReflectShield;
@@ -45,6 +50,16 @@ ___
 	use ReflectShield\ReflectShield;
 	$shield = new ReflectShield;
 	```
+	
+* The .htaccess files are also an installation option. Paste the following into your .htaccess file and it will enable ReflectShield across all pages in the directory where the .htaccess file resides:
+
+	```
+	php_value auto_prepend_file /var/www/html/reflectshield/examples/usinghtaccess/initReflectShield.php
+	```
+
+	If .htaccess files are not enabled, check the following site https://help.ubuntu.com/community/EnablingUseOfApacheHtaccessFiles
+
+
 ___
 
 ##Limitations of ReflectShield:
