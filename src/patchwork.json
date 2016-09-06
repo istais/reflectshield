@@ -1,0 +1,6 @@
+{
+    "redefinable-internals": [
+        "mysql_query",
+        "mysqli_query"
+    ]
+}

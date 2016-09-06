@@ -2,6 +2,8 @@
 
 ReflectShield migrates a part of Chrome XSS Protection on the server side. ReflectShield checks whether a script that’s about to run on a web page is also present in the request that fetched that web page. If the script is present in the request, that’s a strong indication that the web server might have been tricked into reflecting the script. Therefore, it blocks the reflected XSS attacks by translating all characters of this request parameter which have HTML character entity equivalents into these entities.
 
+Furthermore, ReflectShield introduces a similar technique in order to mitigate SQL injection vulnerabilities. ReflectShield hooks common vulnerable MySQL API calls, and checks whether parameters from the request that fetched that web page are also present in the executing SQL queries. If the request parameters are present in the query, and these are not parts of atomic SQL tokens, that's a strong indication that the web server might have been tricked into executing malicious SQL statements.
+
 ##The Chrome XSS Protection:
 
 XSS Auditor is a built-in function of Chrome and Safari designed to mitigate Cross-site Scripting (XSS) attacks. It aims to identify if query parameters contain malicious JavaScript and block the response if it believes the payloads were injected into the server response. XSS Auditor takes a black list approach to identify dangerous characters and tags supplied in request parameters. It also attempts to match query parameters with content to identify injection points.
@@ -9,6 +11,8 @@ XSS Auditor is a built-in function of Chrome and Safari designed to mitigate Cro
 ##The ReflectShield protects from:
 
 * Reflected Cross Site Scripting Attacks: Non-persistent XSS issues, which occur when the web application blindly echos parts of the HTTP request in the respective HTTP response’s HTML. In order to successfully exploit a reflected XSS vulnerability, the adversary has to trick the victim into sending a fabricated HTTP request. This can be done by, for instance, sending the victim a malicious link, or including a hidden Iframe into an attacker controlled page.
+
+* SQL Injection Attacks: Injection issues, in which SQL commands are injected into data-plane input in order to effect the execution of predefined SQL commands. Currently, ReflectShield is able to detect injections in "mysql_query" and "mysqli_query" functions.
 
 ___
 
@@ -20,17 +24,22 @@ ___
 	php_value auto_prepend_file /var/www/html/reflectshield/examples/usinghtaccess/initReflectShield.php
 	```
 
-	The content of initReflectShield.php file should be:
-
-	```php
-	use ReflectShield\ReflectShield;
-	require_once  '/var/www/html/reflectshield/vendor/autoload.php'; 
-	$shield = new ReflectShield;
-	```
-
 	If .htaccess files are not enabled, check the following site https://help.ubuntu.com/community/EnablingUseOfApacheHtaccessFiles
 
 * If none of the above options is available, you can use directly ReflectShield in your PHP scripts, by requesting a new object at the beggining of the script:
+
+	```php
+	use ReflectShield\ReflectShield;
+	if(!isset($AVOIDPREPROCESS)){ 
+		$AVOIDPREPROCESS = true;
+		$shield = new ReflectShield;
+		include __FILE__;
+		return;
+	}
+	```
+
+* Preprocessing is necessary for patching MySQL API calls in order to mitigate SQL injection vulnerabilities. If the protection for SQL injections is not necessary for your site, you can use the following simple object request:
+
 
 	```php
 	use ReflectShield\ReflectShield;

@@ -23,10 +23,19 @@
 
 namespace ReflectShield;
 
+
 class ReflectShield
 {
+	public $xss = null;
+	public $sql = null;
+
 	public function __construct(){
-		$core = new \ReflectShield\Core\SanitizeXSS;
+		$this->xss = new \ReflectShield\Core\SanitizeXSS;
+		$this->sql = new \ReflectShield\Core\SanitizeSQL;
+	}
+	public function __destruct(){
+		$this->xss->__destruct();
+		$this->sql->__destruct();
 	}
 
 }

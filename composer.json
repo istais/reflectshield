@@ -11,7 +11,10 @@
             "email": "ioannis.stais@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "phpmyadmin/sql-parser": "^3.4",
+        "antecedent/patchwork": "^2.0"
+        },
     "require-dev": {
         "phpunit/phpunit": "4.0.*"
     },
