@@ -3,6 +3,9 @@
 ReflectShield migrates a part of Chrome XSS Protection on the server side. ReflectShield checks whether a script that’s about to run on a web page is also present in the request that fetched that web page. If the script is present in the request, that’s a strong indication that the web server might have been tricked into reflecting the script. Therefore, it blocks the reflected XSS attacks by translating all characters of this request parameter which have HTML character entity equivalents into these entities.
 
 Furthermore, ReflectShield introduces a similar technique in order to mitigate SQL injection vulnerabilities. ReflectShield hooks common vulnerable MySQL API calls, and checks whether parameters from the request that fetched that web page are also present in the executing SQL queries. If the request parameters are present in the query, and these are not parts of atomic SQL tokens, that's a strong indication that the web server might have been tricked into executing malicious SQL statements.
+<p align="center">
+<img src="https://raw.githubusercontent.com/istais/reflectshield/master/logo.png"  height="250"  />
+</p>
 
 ##The Chrome XSS Protection:
 
