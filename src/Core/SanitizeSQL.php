@@ -35,7 +35,7 @@ class SanitizeSQL
 	public function sanitize_mysql($functionname, $data){
 		print \Patchwork\hasMissed($functionname);
 		\Patchwork\redefine($functionname, function($query) use ($data) {
-			$parser = new \SqlParser\Parser($query);
+			$parser = new \PhpMyAdmin\SqlParser\Parser($query);
 			foreach ($data as $key => $value) {
 				if (strpos($query, $value) !== FALSE) { 
 					$found = 0;
@@ -67,7 +67,7 @@ class SanitizeSQL
 	public function sanitize_mysqli($functionname, $data){
 		print \Patchwork\hasMissed($functionname);
 		\Patchwork\redefine($functionname, function($link,$query) use ($data) {
-			$parser = new \SqlParser\Parser($query);
+			$parser = new \PhpMyAdmin\SqlParser\Parser($query);
 			foreach ($data as $key => $value) {
 				if (strpos($query, $value) !== FALSE) { 
 					$found = 0;
